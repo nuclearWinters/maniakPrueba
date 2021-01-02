@@ -36,6 +36,7 @@ const Stack = createStackNavigator();
 export const ReduxChild = () => {
   const token = useTypedSelector((state) => state.auth.token);
   const isLoading = useTypedSelector((state) => state.auth.isLoading);
+  const images = useTypedSelector((state) => state.images);
   if (isLoading) {
     return <Splash />;
   } else {
@@ -44,11 +45,10 @@ export const ReduxChild = () => {
         <Stack.Navigator screenOptions={{headerShown: false}}>
           {!token ? (
             <Stack.Screen name="Login" component={Login} />
+          ) : images.length === 0 ? (
+            <Stack.Screen name="Loading" component={Loading} />
           ) : (
-            <>
-              <Stack.Screen name="Loading" component={Loading} />
-              <Stack.Screen name="Main" component={Main} />
-            </>
+            <Stack.Screen name="Main" component={Main} />
           )}
         </Stack.Navigator>
       </NavigationContainer>

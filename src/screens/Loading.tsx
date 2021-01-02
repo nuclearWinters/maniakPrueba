@@ -30,13 +30,11 @@ export const Loading: FC = () => {
         );
         await DB.saveImages(response.data);
         dispatch({type: 'SET_IMAGES', payload: response.data});
-        navigation.navigate('Main');
       } catch (e) {
         if (e.message === 'Network Error') {
           try {
             const images = await DB.getImages();
             dispatch({type: 'SET_IMAGES', payload: images});
-            navigation.navigate('Main');
           } catch (error) {
             await DB.deleteToken();
             dispatch({type: 'DELETE_TOKEN'});
